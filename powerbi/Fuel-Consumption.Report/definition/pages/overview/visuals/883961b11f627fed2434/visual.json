@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "883961b11f627fed2434",
   "position": {
     "x": 40,
@@ -28,6 +28,7 @@
               },
               "queryRef": "Date.Day Type",
               "nativeQueryRef": "Day Type",
+              "active": true,
               "displayName": "Day Type"
             }
           ]

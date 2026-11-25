@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "4fc43f6e808f11e1dc72",
   "position": {
     "x": 1240,
@@ -28,26 +28,8 @@
               },
               "queryRef": "Date.Year",
               "nativeQueryRef": "Year",
+              "active": true,
               "displayName": "Year"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Total Amount"
-                }
-              },
-              "queryRef": "_Measures.Total Amount",
-              "nativeQueryRef": "Total Amount",
-              "displayName": "Fuel Spend"
             }
           ]
         },
@@ -97,6 +79,25 @@
               "queryRef": "_Measures.Cost per Km",
               "nativeQueryRef": "Cost per Km",
               "displayName": "Cost per Km"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Amount"
+                }
+              },
+              "queryRef": "_Measures.Total Amount",
+              "nativeQueryRef": "Total Amount",
+              "displayName": "Fuel Spend"
             }
           ]
         }

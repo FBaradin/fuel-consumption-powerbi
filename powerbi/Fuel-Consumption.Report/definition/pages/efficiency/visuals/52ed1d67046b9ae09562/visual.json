@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "52ed1d67046b9ae09562",
   "position": {
     "x": 40,
@@ -28,6 +28,7 @@
               },
               "queryRef": "Date.Month Year",
               "nativeQueryRef": "Month Year",
+              "active": true,
               "displayName": "Month"
             }
           ]
@@ -193,13 +194,6 @@
         },
         {
           "properties": {
-            "strokeLineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
-                }
-              }
-            },
             "strokeWidth": {
               "expr": {
                 "Literal": {

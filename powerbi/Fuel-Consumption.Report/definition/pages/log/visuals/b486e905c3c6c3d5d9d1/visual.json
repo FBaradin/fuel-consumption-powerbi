@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "b486e905c3c6c3d5d9d1",
   "position": {
     "x": 505,
@@ -100,13 +100,6 @@
       "card": [
         {
           "properties": {
-            "outline": {
-              "expr": {
-                "Literal": {
-                  "Value": "'None'"
-                }
-              }
-            },
             "barShow": {
               "expr": {
                 "Literal": {

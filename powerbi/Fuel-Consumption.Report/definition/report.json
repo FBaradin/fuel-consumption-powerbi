@@ -33,6 +33,19 @@
           }
         }
       }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
     ]
   },
   "resourcePackages": [
@@ -57,33 +70,8 @@
           "type": "CustomTheme"
         },
         {
-          "name": "icon-money.svg",
-          "path": "icon-money.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon-road.svg",
-          "path": "icon-road.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon-gauge.svg",
-          "path": "icon-gauge.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon-pump.svg",
-          "path": "icon-pump.svg",
-          "type": "Image"
-        },
-        {
           "name": "icon-calendar.svg",
           "path": "icon-calendar.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon-tag.svg",
-          "path": "icon-tag.svg",
           "type": "Image"
         },
         {
@@ -92,8 +80,33 @@
           "type": "Image"
         },
         {
+          "name": "icon-gauge.svg",
+          "path": "icon-gauge.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon-money.svg",
+          "path": "icon-money.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon-pump.svg",
+          "path": "icon-pump.svg",
+          "type": "Image"
+        },
+        {
           "name": "icon-receipt.svg",
           "path": "icon-receipt.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon-road.svg",
+          "path": "icon-road.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon-tag.svg",
+          "path": "icon-tag.svg",
           "type": "Image"
         }
       ]

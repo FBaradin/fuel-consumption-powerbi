@@ -74,8 +74,8 @@ table Date
 		annotation SummarizationSetBy = Automatic
 
 	column 'Year Month Number'
-		formatString: 0
 		isHidden
+		formatString: 0
 		lineageTag: 6f1d2c4a-8b3e-4f5a-9c7d-1e2f3a4b5c6d
 		summarizeBy: none
 		isNameInferred

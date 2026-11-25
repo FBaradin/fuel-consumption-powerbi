@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "a5de867b6a17afffca58",
   "position": {
     "x": 40,
@@ -28,6 +28,7 @@
               },
               "queryRef": "Date.Date",
               "nativeQueryRef": "Date",
+              "active": true,
               "displayName": "Fill-up Date"
             }
           ]
@@ -47,6 +48,7 @@
               },
               "queryRef": "_Measures.Liters Consumed",
               "nativeQueryRef": "Liters Consumed",
+              "active": true,
               "displayName": "Liters"
             }
           ]

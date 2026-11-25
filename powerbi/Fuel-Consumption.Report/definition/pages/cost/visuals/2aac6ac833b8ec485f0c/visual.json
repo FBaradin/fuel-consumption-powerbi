@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "2aac6ac833b8ec485f0c",
   "position": {
     "x": 1700,
@@ -80,6 +80,13 @@
                   "Value": "11D"
                 }
               }
+            },
+            "horizontalAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
             }
           },
           "selector": {
@@ -146,13 +153,6 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
-                }
-              }
-            },
-            "roundEdge": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
                 }
               }
             }
