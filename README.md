@@ -9,7 +9,7 @@ The report answers three questions:
 - What does driving actually cost per km and per day, and what drives that cost?
 - Can the manually collected data be trusted?
 
-**[▶ Open the interactive report](https://app.powerbi.com/view?r=eyJrIjoiYTA2MDgzZDEtNDEwNi00ZmY0LTk2NTctZjY3NmM3NDJkZmZlIiwidCI6IjE3MDU2NzI2LWJjZWQtNDE5Ny1iOWZmLTdlZjc4YjM4ZjVjOCIsImMiOjZ9)** (Power BI, no sign-in needed)
+**[▶ Open the interactive report](https://app.powerbi.com/view?r=eyJrIjoiYTA2MDgzZDEtNDEwNi00ZmY0LTk2NTctZjY3NmM3NDJkZmZlIiwidCI6IjE3MDU2NzI2LWJjZWQtNDE5Ny1iOWZmLTdlZjc4YjM4ZjVjOCIsImMiOjZ9&pageName=overview)** (Power BI, no sign-in needed)
 
 The whole project is saved as a **Power BI Project (`.pbip`)**, so the data model, DAX measures and report layout are plain text files under version control. Every change can be reviewed as a diff in this repository's history.
 
