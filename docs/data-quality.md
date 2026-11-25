@@ -1,7 +1,7 @@
 # Data Quality Notes
 
-Source: `data/fuel-log.xlsx`, sheet **Combustible**, Excel table **Tabla1**.
-149 fill-ups recorded manually between **2022-02-17** and **2026-10-27**.
+Source: the fuel log in OneDrive for Business, sheet **Combustible**, Excel table **Tabla1**. The repository copy (`data/fuel-log.xlsx`) is a snapshot.
+These checks were run on the snapshot: 149 fill-ups recorded manually between **2022-02-17** and **2026-10-27**. Fill-ups added after that are refreshed into the report, but are only checked through the `QA_Checks` query.
 
 ## Validation performed
 

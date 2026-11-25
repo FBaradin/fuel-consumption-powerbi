@@ -54,7 +54,7 @@ All pages share a synced **Year** slicer, a **Reset All Filters** button and tab
 ## How it was built
 
 ### 1. Data preparation (Power Query)
-- The source is an Excel table (`data/fuel-log.xlsx`), loaded through a **`FilePath` parameter** so the source can be repointed (e.g. to OneDrive) by changing one value.
+- The source is an Excel table kept in **OneDrive for Business**, read with `Web.Contents` through a **`FilePath` parameter** (see [Data source and refresh](#data-source-and-refresh)).
 - **Layered queries**:
   - `Refuels_Staging` holds the cleaning pipeline and isn't loaded.
   - `Refuels` (loaded) and `QA_Checks` (validation only) both reference it.
@@ -91,20 +91,28 @@ The checks and decisions are documented in [docs/data-quality.md](docs/data-qual
 
 ```
 fuel-consumption-powerbi/
-├── data/fuel-log.xlsx                  Source data (manual fuel log)
+├── data/fuel-log.xlsx                  Snapshot of the source data (live copy is in OneDrive)
 ├── docs/
 │   ├── data-quality.md                 Validation checks and known limitations
 │   └── screenshots/                    Report screenshots
-└── powerbi/
-    ├── Fuel-Consumption.pbip           Open this file in Power BI Desktop
-    ├── Fuel-Consumption.SemanticModel/ Data model as TMDL (tables, measures, relationships)
-    └── Fuel-Consumption.Report/        Report pages, visuals, theme and icons as JSON
+├── powerbi/
+│   ├── Fuel-Consumption.pbip           Open this file in Power BI Desktop
+│   ├── Fuel-Consumption.SemanticModel/ Data model as TMDL (tables, measures, relationships)
+│   └── Fuel-Consumption.Report/        Report pages, visuals, theme and icons as JSON
+└── tools/source_url_filter.py          Git filter that keeps the private OneDrive URL out of commits
 ```
 
-**To open the report:**
-1. Clone the repository and open `powerbi/Fuel-Consumption.pbip` in Power BI Desktop.
-2. Go to **Transform data → Edit parameters** and point `FilePath` to your local copy of `data/fuel-log.xlsx`.
-3. Click **Refresh**.
+## Data source and refresh
+
+- **Source of truth:** the fuel log lives in OneDrive for Business, where new fill-ups are recorded. `data/fuel-log.xlsx` is a snapshot of it (up to 2026-10-27) for anyone cloning the repository.
+- **Scheduled refresh:** the published semantic model refreshes **daily** in the Power BI Service. No gateway is needed, because OneDrive is a cloud source (OAuth2 credentials are stored in the Service). The public report updates after the refresh.
+- **Private URL kept out of git:** the real OneDrive URL contains the tenant and user name, so a git clean/smudge filter (`.gitattributes` + `tools/source_url_filter.py`) replaces it with a placeholder on every commit. The real URL is kept only in the local git config.
+
+**To open the report from a clone** (using the snapshot):
+1. Open `powerbi/Fuel-Consumption.pbip` in Power BI Desktop and go to **Transform data**.
+2. In `Refuels_Staging`, first step (`Origen`), change `Web.Contents` to `File.Contents` in the formula bar.
+3. **Manage Parameters:** set `FilePath` to the full path of your local `data/fuel-log.xlsx`.
+4. **Close & Apply**, then **Refresh**.
 
 ## Tools and skills
 
@@ -114,10 +122,10 @@ Mapped to the PL-300 exam areas:
 - **Prepare the data:** parameters, data profiling, data types, merges, reference vs duplicate queries, disabling query load.
 - **Model the data:** star schema, date table, relationships and cardinality, summarization, explicit measures, `CALCULATE`, time intelligence, semi-additive measures.
 - **Visualize and analyze:** themes, page navigation, synced slicers, combo/scatter/table visuals, rolling averages, reference lines.
+- **Deploy and maintain:** publishing to the Power BI Service, semantic model vs report, cloud data source credentials, scheduled refresh without a gateway, Publish to web (and the tenant setting that controls it).
 
 ## Possible next steps
 - Add the maintenance log (second sheet in the workbook) to analyze total cost of ownership per km.
-- Publish to the Power BI Service with scheduled refresh from OneDrive.
 
 ## Contact Information
 
