@@ -14,6 +14,8 @@ All checks run in the `QA_Checks` Power Query query, which is not loaded into th
 | `Days Since Last` (recalculated from dates) vs. Excel's `Cantidad de días` | All 148 comparable rows match |
 | `Amount` vs. `Liters × Price per Liter` | 3 rows with significant differences (see below) |
 
+**Assumption:** every fill-up is a full tank. That makes the fill-to-fill method valid: the liters at fill-up N replace exactly the fuel burned since fill-up N-1, so km per liter = km driven ÷ liters at the next fill-up.
+
 Because both recalculated columns match, the Excel-calculated columns (`Km recorridos`, `Cantidad de días`, `km/L`, `₡/km`) are dropped. The ratios are rebuilt as DAX measures instead.
 
 ## Findings

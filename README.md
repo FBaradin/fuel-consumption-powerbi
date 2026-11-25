@@ -25,6 +25,8 @@ The whole project is saved as a **Power BI Project (`.pbip`)**, so the data mode
 1. **Driving got 32% cheaper per km.** Cost per km fell from ₡70.3 in 2022 to ₡47.6 in 2026. Most of the drop comes from the fuel price (₡911/L on average in 2022 vs ₡689/L in 2026). 2026 is also the most efficient year so far, at 14.5 km/L.
 2. **I drive about 40% more than in 2022**, around 42 km/day in 2024 and 2026 versus 29.6 in 2022. Annual spend in the full years 2022–2025 still stayed between ₡679k and ₡859k, because cheaper fuel offset the extra km.
 3. **Efficiency dipped in 2023** (12.3 km/L), with the three worst months of the series (Mar, May and Sep 2023, all around 11.3–11.5 km/L). The best month is Sep 2026 at 15.6 km/L.
+   - In 2022–2023 I moved between areas. The mid-2022 peak (14.8 km/L in June) matches a period living in a very flat region.
+   - Since 2024 I've lived in the same area, so the 2026 improvement isn't explained by a move.
 4. **Fill-ups happen mostly on weekends.** 42% of fill-ups fall on Saturday or Sunday, although weekends are only 29% of days. Saturday is the most common day (36 fill-ups), Monday the least (9).
 5. **Tanks last longer than I planned.** I aim to refill every ~300 km, but the real average is 422 km per tank.
 
