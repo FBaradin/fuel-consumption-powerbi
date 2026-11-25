@@ -4,7 +4,7 @@ table Date
 
 	column Date
 		isKey
-		formatString: General Date
+		formatString: yyyy-mm-dd
 		lineageTag: 4d93f53a-0cd1-4c90-bf6e-001c83fe8dda
 		summarizeBy: none
 		isNameInferred
@@ -73,6 +73,33 @@ table Date
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Year Month Number'
+		formatString: 0
+		isHidden
+		lineageTag: 6f1d2c4a-8b3e-4f5a-9c7d-1e2f3a4b5c6d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year Month Number]
+
+		annotation SummarizationSetBy = User
+
+	column 'Month Year'
+		lineageTag: 7a2e3d5b-9c4f-4a6b-8d1e-2f3a4b5c6d7e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Year]
+		sortByColumn: 'Year Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Type'
+		lineageTag: 8b3f4e6c-ad5a-4b7c-9e2f-3a4b5c6d7e8f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day Type]
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Date = calculated
 		mode: import
 		source =
@@ -88,7 +115,10 @@ table Date
 				        "Month", FORMAT ( [Date], "MMM", "en-US" ),
 				        "Year-Month", FORMAT ( [Date], "YYYY-MM" ),
 				        "Weekday Number", WEEKDAY ( [Date], 2 ),
-				        "Weekday", FORMAT ( [Date], "ddd", "en-US" )
+				        "Weekday", FORMAT ( [Date], "ddd", "en-US" ),
+				        "Year Month Number", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+				        "Month Year", FORMAT ( [Date], "MMM yyyy", "en-US" ),
+				        "Day Type", IF ( WEEKDAY ( [Date], 2 ) > 5, "Weekend", "Weekday" )
 				    )
 
 	annotation PBI_Id = 3f447249b5e44f0189413048866627ae
