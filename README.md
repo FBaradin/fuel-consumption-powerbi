@@ -1,6 +1,6 @@
 # Personal Fuel Consumption Analysis (Power BI)
 
-*Part of my [Data Analyst Portfolio](https://github.com/FBaradin/Data-Analyst-Portfolio).*
+*Part of my portfolio: [fbaradin.github.io](https://fbaradin.github.io).*
 
 An end-to-end Power BI project built on almost five years of my own fuel log: **149 fill-ups, 62,386 km and ₡3.56 million** spent on fuel between February 2022 and October 2026.
 
