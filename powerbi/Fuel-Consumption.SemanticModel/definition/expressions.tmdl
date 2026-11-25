@@ -1,4 +1,4 @@
-expression FilePath = "C:\Users\User\Projects\fuel-consumption-powerbi\data\fuel-log.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression FilePath = "https://YOUR-TENANT-my.sharepoint.com/personal/YOUR_USER/Documents/fuel-log.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: ff6ae3aa-99d1-4201-95c4-62eb0dbd1cf6
 
 	annotation PBI_NavigationStepName = Navegación
@@ -21,7 +21,7 @@ expression QA_Checks =
 
 expression Refuels_Staging =
 		let
-		    Origen = Excel.Workbook(File.Contents(FilePath), null, true),
+		    Origen = Excel.Workbook(Web.Contents(FilePath), null, true),
 		    Tabla1_Table = Origen{[Item="Tabla1",Kind="Table"]}[Data],
 		    #"Tipo cambiado" = Table.TransformColumnTypes(Tabla1_Table,{{"Fecha", type date}, {"Cantidad de días", Int64.Type}, {"Tipo combustible", type text}, {"Kilometraje", Int64.Type}, {"Cantidad (L)", type number}, {"Precio", Int64.Type}, {"Monto", type number}, {"Km recorridos", Int64.Type}, {"₡/km", type number}, {"km/L", type number}}),
 		    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Tipo cambiado",{{"Fecha", "Date"}, {"Tipo combustible", "Fuel Type"}, {"Kilometraje", "Odometer"}, {"Cantidad (L)", "Liters"}, {"Precio", "Price per Liter"}, {"Monto", "Amount"}}),
