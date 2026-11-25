@@ -22,7 +22,7 @@ table _Measures
 		lineageTag: 6c5e6c9d-d590-4a81-bb57-bcfe982cba33
 
 	/// Number of fill-ups.
-	measure 'Fill-ups' = COUNTROWS ( Refuels )
+	measure Fill-ups = COUNTROWS ( Refuels )
 		formatString: #,0
 		displayFolder: 1. Base
 		lineageTag: 1dc6ae6f-0449-4c43-8208-16debba25e55
@@ -36,31 +36,6 @@ table _Measures
 		formatString: #,0.0
 		displayFolder: 1. Base
 		lineageTag: cb211342-5979-41ec-8797-035a60820b16
-
-	/// Colones that can be paired with km driven (excludes the first fill-up).
-	measure 'Amount Consumed' =
-			CALCULATE (
-			    [Total Amount],
-			    NOT ISBLANK ( Refuels[Km Driven] )
-			)
-		formatString: "₡"#,0;-"₡"#,0;"₡"#,0
-		displayFolder: 1. Base
-		lineageTag: 7c7be8dc-0c53-5493-9c39-1c44d01f9e02
-
-		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
-
-	/// Days covered by the fill-ups (sum of days since the previous fill-up).
-	measure 'Total Days' = SUM ( Refuels[Days Since Last] )
-		formatString: #,0
-		displayFolder: 1. Base
-		lineageTag: 76a1c1a0-7433-4e43-9c79-cb1127dfe3b6
-
-	/// Date of the most recent fill-up, ignoring all filters. Used to blank out time-intelligence results after the data ends.
-	measure 'Last Data Date' = CALCULATE ( MAX ( Refuels[Date] ), REMOVEFILTERS () )
-		formatString: yyyy-mm-dd
-		isHidden
-		displayFolder: 1. Base
-		lineageTag: dd006036-4fd0-5b26-a758-0d911234e7f1
 
 	/// Fuel efficiency: km driven / liters consumed (a ratio of sums, never an average of ratios).
 	measure 'Km per Liter' = DIVIDE ( [Total Km], [Liters Consumed] )
@@ -84,11 +59,93 @@ table _Measures
 
 		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
 
+	/// Semi-additive: odometer reading on the last date with data in the selected period.
+	measure 'Odometer (End of Period)' = LASTNONBLANKVALUE ( 'Date'[Date], MAX ( Refuels[Odometer] ) )
+		formatString: #,0
+		displayFolder: 2. Efficiency & Cost
+		lineageTag: 1442c5d1-bdac-4b86-b7fe-63a68bbbe4a6
+
+	/// Days covered by the fill-ups (sum of days since the previous fill-up).
+	measure 'Total Days' = SUM ( Refuels[Days Since Last] )
+		formatString: #,0
+		displayFolder: 1. Base
+		lineageTag: 76a1c1a0-7433-4e43-9c79-cb1127dfe3b6
+
 	/// Average km driven per calendar day.
 	measure 'Km per Day' = DIVIDE ( [Total Km], [Total Days] )
 		formatString: 0.0
 		displayFolder: 2. Efficiency & Cost
 		lineageTag: d8c8b088-6a5a-4ef6-828a-b7c66bff6f5e
+
+	/// Year-to-date fuel spend. Blank after the last fill-up so charts don't show flat future values.
+	measure 'Amount YTD' =
+			IF (
+			    MIN ( 'Date'[Date] ) > [Last Data Date],
+			    BLANK (),
+			    TOTALYTD ( [Total Amount], 'Date'[Date] )
+			)
+		formatString: "₡"#,0;-"₡"#,0;"₡"#,0
+		displayFolder: 3. Time Intelligence
+		lineageTag: a7b3189d-0e01-4de0-9c07-5b25bd1b4269
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
+
+	/// Fuel spend in the same period of the previous year. Blank after the last fill-up.
+	measure 'Amount PY' =
+			IF (
+			    MIN ( 'Date'[Date] ) > [Last Data Date],
+			    BLANK (),
+			    CALCULATE ( [Total Amount], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+			)
+		formatString: "₡"#,0;-"₡"#,0;"₡"#,0
+		displayFolder: 3. Time Intelligence
+		lineageTag: 4dcc7153-826e-47ec-9fd0-439f2a1b7f14
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
+
+	/// Change in fuel spend vs the same period last year. Blank when either period has no data, or across several years (e.g. table totals).
+	measure 'Amount YoY %' =
+			IF (
+			    NOT HASONEVALUE ( 'Date'[Year] ) || ISBLANK ( [Total Amount] ) || ISBLANK ( [Amount PY] ),
+			    BLANK (),
+			    DIVIDE ( [Total Amount] - [Amount PY], [Amount PY] )
+			)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 3. Time Intelligence
+		lineageTag: 8a2af5e1-9ea7-4355-975e-9aedb79478b4
+
+	/// Km per liter over the last 3 months, to smooth fill-up to fill-up noise. Blank after the last fill-up.
+	measure 'Km per Liter (3M Rolling)' =
+			IF (
+			    MIN ( 'Date'[Date] ) > [Last Data Date],
+			    BLANK (),
+			    CALCULATE (
+			        [Km per Liter],
+			        DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH )
+			    )
+			)
+		formatString: 0.00
+		displayFolder: 3. Time Intelligence
+		lineageTag: 7ea0878e-27ba-44cb-93ec-6d1cb38d44db
+
+	/// Colones that can be paired with km driven (excludes the first fill-up).
+	measure 'Amount Consumed' =
+			CALCULATE (
+			    [Total Amount],
+			    NOT ISBLANK ( Refuels[Km Driven] )
+			)
+		formatString: "₡"#,0;-"₡"#,0;"₡"#,0
+		displayFolder: 1. Base
+		lineageTag: 7c7be8dc-0c53-5493-9c39-1c44d01f9e02
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
+
+	/// Date of the most recent fill-up, ignoring all filters. Used to blank out time-intelligence results after the data ends.
+	measure 'Last Data Date' = CALCULATE ( MAX ( Refuels[Date] ), REMOVEFILTERS () )
+		formatString: yyyy-mm-dd
+		isHidden
+		displayFolder: 1. Base
+		lineageTag: dd006036-4fd0-5b26-a758-0d911234e7f1
 
 	/// Average colones spent on fuel per calendar day.
 	measure 'Daily Fuel Cost' = DIVIDE ( [Amount Consumed], [Total Days] )
@@ -132,63 +189,6 @@ table _Measures
 
 		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
 
-	/// Semi-additive: odometer reading on the last date with data in the selected period.
-	measure 'Odometer (End of Period)' = LASTNONBLANKVALUE ( 'Date'[Date], MAX ( Refuels[Odometer] ) )
-		formatString: #,0
-		displayFolder: 2. Efficiency & Cost
-		lineageTag: 1442c5d1-bdac-4b86-b7fe-63a68bbbe4a6
-
-	/// Year-to-date fuel spend. Blank after the last fill-up so charts don't show flat future values.
-	measure 'Amount YTD' =
-			IF (
-			    MIN ( 'Date'[Date] ) > [Last Data Date],
-			    BLANK (),
-			    TOTALYTD ( [Total Amount], 'Date'[Date] )
-			)
-		formatString: "₡"#,0;-"₡"#,0;"₡"#,0
-		displayFolder: 3. Time Intelligence
-		lineageTag: a7b3189d-0e01-4de0-9c07-5b25bd1b4269
-
-		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
-
-	/// Fuel spend in the same period of the previous year. Blank after the last fill-up.
-	measure 'Amount PY' =
-			IF (
-			    MIN ( 'Date'[Date] ) > [Last Data Date],
-			    BLANK (),
-			    CALCULATE ( [Total Amount], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
-			)
-		formatString: "₡"#,0;-"₡"#,0;"₡"#,0
-		displayFolder: 3. Time Intelligence
-		lineageTag: 4dcc7153-826e-47ec-9fd0-439f2a1b7f14
-
-		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
-
-	/// Change in fuel spend vs the same period last year. Blank when either period has no data.
-	measure 'Amount YoY %' =
-			IF (
-			    ISBLANK ( [Total Amount] ) || ISBLANK ( [Amount PY] ),
-			    BLANK (),
-			    DIVIDE ( [Total Amount] - [Amount PY], [Amount PY] )
-			)
-		formatString: +0.0%;-0.0%;0.0%
-		displayFolder: 3. Time Intelligence
-		lineageTag: 8a2af5e1-9ea7-4355-975e-9aedb79478b4
-
-	/// Km per liter over the last 3 months, to smooth fill-up to fill-up noise. Blank after the last fill-up.
-	measure 'Km per Liter (3M Rolling)' =
-			IF (
-			    MIN ( 'Date'[Date] ) > [Last Data Date],
-			    BLANK (),
-			    CALCULATE (
-			        [Km per Liter],
-			        DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH )
-			    )
-			)
-		formatString: 0.00
-		displayFolder: 3. Time Intelligence
-		lineageTag: 7ea0878e-27ba-44cb-93ec-6d1cb38d44db
-
 	/// All-time km per liter, ignoring date filters: a reference line for trend charts.
 	measure 'Km per Liter (All-Time)' =
 			IF (
@@ -213,10 +213,10 @@ table _Measures
 
 		annotation PBI_FormatHint = {"currencyCulture":"es-CR"}
 
-	/// Change in cost per km vs the same period last year.
+	/// Change in cost per km vs the same period last year. Blank across several years (e.g. table totals).
 	measure 'Cost per Km YoY %' =
 			IF (
-			    ISBLANK ( [Cost per Km] ) || ISBLANK ( [Cost per Km PY] ),
+			    NOT HASONEVALUE ( 'Date'[Year] ) || ISBLANK ( [Cost per Km] ) || ISBLANK ( [Cost per Km PY] ),
 			    BLANK (),
 			    DIVIDE ( [Cost per Km] - [Cost per Km PY], [Cost per Km PY] )
 			)
@@ -235,3 +235,4 @@ table _Measures
 				    #"Removed Columns"
 
 	annotation PBI_ResultType = Table
+
