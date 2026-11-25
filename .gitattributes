@@ -1,0 +1,2 @@
+# Replace the private OneDrive URL with a placeholder on commit (see tools/source_url_filter.py)
+powerbi/Fuel-Consumption.SemanticModel/definition/expressions.tmdl filter=sourceurl
