@@ -1,0 +1,50 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "f918e48d543562e94295",
+  "position": {
+    "x": 40,
+    "y": 22,
+    "z": 2000,
+    "height": 70,
+    "width": 1100,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Personal Fuel Consumption Analysis",
+                    "textStyle": {
+                      "fontSize": "24pt",
+                      "color": "#FFFFFF",
+                      "fontFamily": "Segoe UI Semibold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Manual fuel log of one car in Costa Rica  ·  amounts in colones (₡)",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#9FB3D1",
+                      "fontFamily": "Segoe UI"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
